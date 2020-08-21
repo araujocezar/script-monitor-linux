@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>Import Template</h1>
+<div mat-dialog-content>
+    <form [formGroup]="templateForm" autocomplete="off">
+    <mat-form-field fxFlex>
+        <mat-label>Import template</mat-label>
+        <textarea required matInput formControlName="template" placeholder="Paste the template JSON here" cdkTextareaAutosize></textarea>
+        <mat-error *ngIf="templateForm.controls.template?.errors?.required">
+            the field is required
+        </mat-error>
+    </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions fxLayoutAlign="end center">
+    <button  color="warn"  mat-button mat-dialog-close>CLOSE</button>
+    <button color="primary" mat-button (click)="clickImport()" [disabled]="!templateForm.valid">IMPORT</button>
+</div>

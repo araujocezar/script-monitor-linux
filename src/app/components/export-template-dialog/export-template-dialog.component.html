@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Export Template</h1>
+<div mat-dialog-content>
+    <mat-form-field fxFlex>
+        <mat-label>Leave a comment</mat-label>
+        <textarea matInput placeholder="Ex. It makes me feel..." cdkTextareaAutosize value="{{data}}"></textarea>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions fxLayoutAlign="end center">
+    <button color="warn" mat-button mat-dialog-close>CLOSE</button>
+    <button color="primary" mat-button (click)="clickExport()">EXPORT</button>
+</div>

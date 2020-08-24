@@ -97,10 +97,10 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
 
     // the list of data to show in the Palette
     myPalette.model.nodeDataArray = [
-      { head: 'Computador', key: 'Computador', img: '../../assets/computer.png', type: 1 },
+      { head: 'Computer', key: 'Computador', img: '../../assets/computer.png', type: 1 },
       { head: 'CPU', key: 'Cpu', img: '../../assets/cpu.png', type: 2 },
-      { head: 'Rede', key: 'Rede', img: '../../assets/rede.png', type: 3 },
-      { head: 'Processos', key: 'Processos', img: '../../assets/processo.png', type: 4 },
+      { head: 'Network', key: 'Rede', img: '../../assets/rede.png', type: 3 },
+      { head: 'Process', key: 'Processos', img: '../../assets/processo.png', type: 4 },
       { head: 'HD', key: 'Disco rígido', img: '../../assets/hdd.png', type: 5 }
     ];
     // dicionairo keys 1- computador, 2 - cpu, 3 -rede, 4-processos, 5-hd
@@ -138,9 +138,7 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
     // when a node is double-clicked, add a child to it
     this.diagrama.addDiagramListener('ObjectDoubleClicked', (e: any) => {
       const node = e.subject.part.data;
-      // console.log(node);
-      console.log(this.diagrama.model.toJson());
-      this.dialog.open(ConfigDialogComponent);
+      this.dialog.open(ConfigDialogComponent, { width: '600px', data: node });
     });
   }
   openImportDialog() {

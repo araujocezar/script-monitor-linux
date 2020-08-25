@@ -16,7 +16,6 @@ export class ExportTemplateDialogComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.data);
   }
   clickExport() {
     const dataAtual = new Date();

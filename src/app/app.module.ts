@@ -8,7 +8,8 @@ import { DiagramaComponent } from './components/diagrama/diagrama.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule, MatIconModule, MatToolbarModule, MatCardModule,
   MatDialogModule, MatButtonModule, MatButtonToggleModule, MatListModule,
-   MatMenuModule, MatSidenavModule, MatTableModule, MatTabsModule, MatInputModule } from '@angular/material';
+   MatMenuModule, MatSidenavModule, MatTableModule, MatTabsModule, MatInputModule,
+    MatRadioModule, MatSelectModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ConfigDialogComponent } from './components/config-dialog/config-dialog.component';
 import { ImportTemplateDialogComponent } from './components/import-template-dialog/import-template-dialog.component';
@@ -43,7 +44,9 @@ import { FormControl, FormGroupDirective, NgForm, Validators, ReactiveFormsModul
     MatTableModule,
     MatTabsModule,
     MatInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatRadioModule,
+    MatSelectModule
 
   ],
   providers: [],

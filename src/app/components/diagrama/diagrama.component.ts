@@ -17,6 +17,14 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
 
   @ViewChild('myPalette', { static: true }) public myPaletteComponent: PaletteComponent;
 
+  clearJson = {
+    // tslint:disable-next-line:object-literal-key-quotes
+    'class': 'GraphLinksModel',
+    // tslint:disable-next-line:object-literal-key-quotes
+    'nodeDataArray': '[]',
+    // tslint:disable-next-line:object-literal-key-quotes
+    'linkDataArray': '[]'
+  };
   public diagrama: go.Diagram = null;
   public paleta: go.Palette = null;
   JSONExport: string;
@@ -138,7 +146,7 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
     // when a node is double-clicked, add a child to it
     this.diagrama.addDiagramListener('ObjectDoubleClicked', (e: any) => {
       const node = e.subject.part.data;
-      this.dialog.open(ConfigDialogComponent, { width: '600px', data: node });
+      this.dialog.open(ConfigDialogComponent, { width: '350px', data: node });
     });
   }
   openImportDialog() {
@@ -152,5 +160,8 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
   openExportDialog() {
     this.JSONExport = this.diagrama.model.toJson();
     this.dialog.open(ExportTemplateDialogComponent, { width: '600px', data: this.JSONExport });
+  }
+  clear() {
+    this.diagrama.model = go.Model.fromJson(this.clearJson);
   }
 }

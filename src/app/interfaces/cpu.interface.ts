@@ -1,4 +1,5 @@
 export interface Cpu {
+    id: number;
     comment?: string;
     core: string;
     gnice: boolean;

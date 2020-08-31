@@ -1,7 +1,178 @@
 <h1 mat-dialog-title>Node config - {{data.head}}</h1>
 <div>
     <div *ngIf="data.type === 1">
-        computer
+        <div>
+            <form [formGroup]="computerForm" autocomplete="off" fxLayout="column" fxLayoutGap="12px">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Name</mat-label>
+                    <input matInput formControlName="name">
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Password</mat-label>
+                    <input matInput formControlName="password">
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <mat-label>User</mat-label>
+                    <input matInput formControlName="user">
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Monitoring Time Second</mat-label>
+                    <input matInput formControlName="monitoring_time_second">
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Sampling Frequency Second</mat-label>
+                    <input matInput formControlName="sampling_frequency_second">
+                </mat-form-field>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>Data</label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="data">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>Hour </label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="hour">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>Memory Buffers</label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="memory_buffers">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>Memory Cache:</label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="memory_cache">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>Memory Free </label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="memory_free">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>Memory Shared: </label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="memory_shared">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>Memory Total </label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px"
+                            formControlName="memory_total">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>Memory Used </label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="memory_used">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>RSA:</label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="rsa">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>Swap Free </label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="swap_free">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>Swap Total: </label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="swap_total">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>Swap Used: </label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="swap_used">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>Zombie Process Total: </label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="zombie_process_total">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Comment</mat-label>
+                    <input matInput formControlName="comment">
+                </mat-form-field>
+            </form>
+        </div>
     </div>
     <div *ngIf="data.type === 2">
         <div>
@@ -34,112 +205,112 @@
                     </mat-select>
                 </mat-form-field>
                 <div fxLayoutGap="14px" fxFlex>
-                    <div fxFlex="45">
+                    <div fxFlex="50">
                         <label>Gnice:</label>
                     </div>
                     <div fxFlex>
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="8px" formControlName="gnice">
-                            <mat-radio-button value="true">True</mat-radio-button>
-                            <mat-radio-button value="false">False</mat-radio-button>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="gnice">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
                         </mat-radio-group>
                     </div>
                 </div>
                 <div fxLayoutGap="14px" fxFlex>
-                    <div fxFlex="45">
+                    <div fxFlex="50">
                         <label>Guest:</label>
                     </div>
                     <div fxFlex>
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="8px" formControlName="guest">
-                            <mat-radio-button value="true">True</mat-radio-button>
-                            <mat-radio-button value="false">False</mat-radio-button>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="guest">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
                         </mat-radio-group>
                     </div>
                 </div>
                 <div fxLayoutGap="14px" fxFlex>
-                    <div fxFlex="45">
+                    <div fxFlex="50">
                         <label>Idle:</label>
                     </div>
                     <div fxFlex>
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="8px" formControlName="idle">
-                            <mat-radio-button value="true">True</mat-radio-button>
-                            <mat-radio-button value="false">False</mat-radio-button>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="idle">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
                         </mat-radio-group>
                     </div>
                 </div>
                 <div fxLayoutGap="14px" fxFlex>
-                    <div fxFlex="45">
+                    <div fxFlex="50">
                         <label>Iowait: </label>
                     </div>
                     <div fxFlex>
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="8px" formControlName="iowait">
-                            <mat-radio-button value="true">True</mat-radio-button>
-                            <mat-radio-button value="false">False</mat-radio-button>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="iowait">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
                         </mat-radio-group>
                     </div>
                 </div>
                 <div fxLayoutGap="14px" fxFlex>
-                    <div fxFlex="45">
+                    <div fxFlex="50">
                         <label>Irq: </label>
                     </div>
                     <div fxFlex>
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="8px" formControlName="irq">
-                            <mat-radio-button value="true">True</mat-radio-button>
-                            <mat-radio-button value="false">False</mat-radio-button>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="irq">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
                         </mat-radio-group>
                     </div>
                 </div>
                 <div fxLayoutGap="14px" fxFlex>
-                    <div fxFlex="45">
+                    <div fxFlex="50">
                         <label>Nice:</label>
                     </div>
                     <div fxFlex>
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="8px" formControlName="nice">
-                            <mat-radio-button value="true">True</mat-radio-button>
-                            <mat-radio-button value="false">False</mat-radio-button>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="nice">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
                         </mat-radio-group>
                     </div>
                 </div>
                 <div fxLayoutGap="14px" fxFlex>
-                    <div fxFlex="45">
+                    <div fxFlex="50">
                         <label>Soft:</label>
                     </div>
                     <div fxFlex>
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="8px" formControlName="soft">
-                            <mat-radio-button value="true">True</mat-radio-button>
-                            <mat-radio-button value="false">False</mat-radio-button>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="soft">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
                         </mat-radio-group>
                     </div>
                 </div>
                 <div fxLayoutGap="14px" fxFlex>
-                    <div fxFlex="45">
+                    <div fxFlex="50">
                         <label>Steal:</label>
                     </div>
                     <div fxFlex>
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="8px" formControlName="steal">
-                            <mat-radio-button value="true">True</mat-radio-button>
-                            <mat-radio-button value="false">False</mat-radio-button>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="steal">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
                         </mat-radio-group>
                     </div>
                 </div>
                 <div fxLayoutGap="14px" fxFlex>
-                    <div fxFlex="45">
+                    <div fxFlex="50">
                         <label>Sys:</label>
                     </div>
                     <div fxFlex>
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="8px" formControlName="sys">
-                            <mat-radio-button value="true">True</mat-radio-button>
-                            <mat-radio-button value="false">False</mat-radio-button>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="sys">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
                         </mat-radio-group>
                     </div>
                 </div>
                 <div fxLayoutGap="14px" fxFlex>
-                    <div fxFlex="45">
+                    <div fxFlex="50">
                         <label>User:</label>
                     </div>
                     <div fxFlex>
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="8px" formControlName="user">
-                            <mat-radio-button value="true">True</mat-radio-button>
-                            <mat-radio-button value="false">False</mat-radio-button>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="user">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
                         </mat-radio-group>
                     </div>
                 </div>
@@ -158,46 +329,46 @@
                     <input matInput formControlName="name">
                 </mat-form-field>
                 <div fxLayoutGap="14px" fxFlex>
-                    <div fxFlex="45">
+                    <div fxFlex="50">
                         <label>Download KB:</label>
                     </div>
                     <div fxFlex>
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="8px" formControlName="download_kb">
-                            <mat-radio-button value="true">True</mat-radio-button>
-                            <mat-radio-button value="false">False</mat-radio-button>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="download_kb">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
                         </mat-radio-group>
                     </div>
                 </div>
                 <div fxLayoutGap="14px" fxFlex>
-                    <div fxFlex="45">
+                    <div fxFlex="50">
                         <label>Download Packet: </label>
                     </div>
                     <div fxFlex>
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="8px" formControlName="download_packet">
-                            <mat-radio-button value="true">True</mat-radio-button>
-                            <mat-radio-button value="false">False</mat-radio-button>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="download_packet">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
                         </mat-radio-group>
                     </div>
                 </div>
                 <div fxLayoutGap="14px" fxFlex>
-                    <div fxFlex="45">
+                    <div fxFlex="50">
                         <label>Upload KB: </label>
                     </div>
                     <div fxFlex>
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="8px" formControlName="upload_kb">
-                            <mat-radio-button value="true">True</mat-radio-button>
-                            <mat-radio-button value="false">False</mat-radio-button>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="upload_kb">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
                         </mat-radio-group>
                     </div>
                 </div>
                 <div fxLayoutGap="14px" fxFlex>
-                    <div fxFlex="45">
+                    <div fxFlex="50">
                         <label>Upload Packet:</label>
                     </div>
                     <div fxFlex>
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="8px" formControlName="upload_packet">
-                            <mat-radio-button value="true">True</mat-radio-button>
-                            <mat-radio-button value="false">False</mat-radio-button>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="upload_packet">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
                         </mat-radio-group>
                     </div>
                 </div>
@@ -209,7 +380,143 @@
         </div>
     </div>
     <div *ngIf="data.type === 4">
-        processos
+        <div>
+            <form [formGroup]="processForm" autocomplete="off" fxLayout="column" fxLayoutGap="12px">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Name</mat-label>
+                    <input matInput formControlName="name">
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Filter</mat-label>
+                    <input matInput formControlName="filter">
+                </mat-form-field>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>CPU Core</label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="cpu_core">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>CPU Total Percent </label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="cpu_total_percente">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>Elapsed Time</label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="elapsed_time">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>Guest Percent:</label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="guest_percent">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>Max Faults Sec </label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="max_faults_sec">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>Min Faults Sec: </label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="min_faults_sec">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>Physical Memory Percent: </label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="physical_memory_percent">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>Resident Memory KB </label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="resident_memory_kb">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>System Percent:</label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="system_percent">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>Usr Percent </label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="usr_percent">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>Virtual Memory KB: </label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="virtual_memory_kb">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Comment</mat-label>
+                    <input matInput formControlName="comment">
+                </mat-form-field>
+            </form>
+        </div>
     </div>
     <div *ngIf="data.type === 5">
         <div>
@@ -223,9 +530,9 @@
                         <label>Blocks: </label>
                     </div>
                     <div fxFlex>
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="8px" formControlName="blocks"> 
-                            <mat-radio-button value="true">True</mat-radio-button>
-                            <mat-radio-button value="false">False</mat-radio-button>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="blocks"> 
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
                         </mat-radio-group>
                     </div>
                 </div>
@@ -234,9 +541,9 @@
                         <label>Free KB: </label>
                     </div>
                     <div fxFlex>
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="8px"  formControlName="free_kb">
-                            <mat-radio-button value="true">True</mat-radio-button>
-                            <mat-radio-button value="false">False</mat-radio-button>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px"  formControlName="free_kb">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
                         </mat-radio-group>
                     </div>
                 </div>
@@ -245,9 +552,9 @@
                         <label>Free Percent: </label>
                     </div>
                     <div fxFlex>
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="8px"  formControlName="free_percent">
-                            <mat-radio-button value="true">True</mat-radio-button>
-                            <mat-radio-button value="false">False</mat-radio-button>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px"  formControlName="free_percent">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
                         </mat-radio-group>
                     </div>
                 </div>
@@ -256,9 +563,9 @@
                         <label>Total: </label>
                     </div>
                     <div fxFlex>
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="8px"  formControlName="total">
-                            <mat-radio-button value="true">True</mat-radio-button>
-                            <mat-radio-button value="false">False</mat-radio-button>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px"  formControlName="total">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
                         </mat-radio-group>
                     </div>
                 </div>
@@ -267,9 +574,9 @@
                         <label>Used KB: </label>
                     </div>
                     <div fxFlex>
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="8px"  formControlName="used_kb">
-                            <mat-radio-button value="true">True</mat-radio-button>
-                            <mat-radio-button value="false">False</mat-radio-button>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px"  formControlName="used_kb">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
                         </mat-radio-group>
                     </div>
                 </div>
@@ -278,9 +585,9 @@
                         <label>Used Percent: </label>
                     </div>
                     <div fxFlex>
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="8px" formControlName="used_percent">
-                            <mat-radio-button value="true">True</mat-radio-button>
-                            <mat-radio-button value="false">False</mat-radio-button>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="used_percent">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
                         </mat-radio-group>
                     </div>
                 </div>

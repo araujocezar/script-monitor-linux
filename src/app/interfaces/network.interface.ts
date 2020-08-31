@@ -1,4 +1,5 @@
 export interface Network {
+    id: number;
     comment?: string;
     download_kb: boolean;
     download_packet: boolean;

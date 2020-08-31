@@ -1,4 +1,5 @@
 export interface Computer {
+    id: number;
     comment?: string;
     data: boolean;
     hour: boolean;

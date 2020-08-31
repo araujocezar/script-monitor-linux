@@ -105,11 +105,11 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
 
     // the list of data to show in the Palette
     myPalette.model.nodeDataArray = [
-      { head: 'Computer', key: 'Computador', img: '../../assets/computer.png', type: 1 },
-      { head: 'CPU', key: 'Cpu', img: '../../assets/cpu.png', type: 2 },
-      { head: 'Network', key: 'Rede', img: '../../assets/rede.png', type: 3 },
-      { head: 'Process', key: 'Processos', img: '../../assets/processo.png', type: 4 },
-      { head: 'HD', key: 'Disco rígido', img: '../../assets/hdd.png', type: 5 }
+      { head: 'Computer', key: '1', img: '../../assets/computer.png', type: 1 },
+      { head: 'CPU', key: '2', img: '../../assets/cpu.png', type: 2 },
+      { head: 'Network', key: '3', img: '../../assets/rede.png', type: 3 },
+      { head: 'Process', key: '4', img: '../../assets/processo.png', type: 4 },
+      { head: 'HD', key: '5', img: '../../assets/hdd.png', type: 5 }
     ];
     // dicionairo keys 1- computador, 2 - cpu, 3 -rede, 4-processos, 5-hd
 
@@ -146,7 +146,7 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
     // when a node is double-clicked, add a child to it
     this.diagrama.addDiagramListener('ObjectDoubleClicked', (e: any) => {
       const node = e.subject.part.data;
-      this.dialog.open(ConfigDialogComponent, { width: '350px', data: node });
+      this.dialog.open(ConfigDialogComponent, { width: '500px', maxHeight: '750px', data: node });
     });
   }
   openImportDialog() {

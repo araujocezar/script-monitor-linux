@@ -1,4 +1,5 @@
 export interface Process {
+    id: number;
     comment?: string;
     cpu_core: boolean;
     cpu_total_percente: boolean;

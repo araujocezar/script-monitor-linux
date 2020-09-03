@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>Node config - {{data.head}}</h1>
 <div>
-    <div *ngIf="data.type === 1">
+    <div *ngIf="data.node.type === 1">
         <div>
             <form [formGroup]="computerForm" autocomplete="off" fxLayout="column" fxLayoutGap="12px">
                 <mat-form-field class="example-full-width">
@@ -174,7 +174,7 @@
             </form>
         </div>
     </div>
-    <div *ngIf="data.type === 2">
+    <div *ngIf="data.node.type === 2">
         <div>
             <form [formGroup]="cpuForm" autocomplete="off" fxLayout="column" fxLayoutGap="12px">
                 <mat-form-field class="example-full-width">
@@ -321,7 +321,7 @@
             </form>
         </div>
     </div>
-    <div *ngIf="data.type === 3">
+    <div *ngIf="data.node.type === 3">
         <div>
             <form [formGroup]="networkForm" autocomplete="off" fxLayout="column" fxLayoutGap="12px">
                 <mat-form-field class="example-full-width">
@@ -379,7 +379,7 @@
             </form>
         </div>
     </div>
-    <div *ngIf="data.type === 4">
+    <div *ngIf="data.node.type === 4">
         <div>
             <form [formGroup]="processForm" autocomplete="off" fxLayout="column" fxLayoutGap="12px">
                 <mat-form-field class="example-full-width">
@@ -518,7 +518,7 @@
             </form>
         </div>
     </div>
-    <div *ngIf="data.type === 5">
+    <div *ngIf="data.node.type === 5">
         <div>
             <form [formGroup]="hdForm" autocomplete="off" fxLayout="column" fxLayoutGap="12px">
                 <mat-form-field class="example-full-width">

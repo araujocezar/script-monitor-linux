@@ -28,7 +28,10 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
   public diagrama: go.Diagram = null;
   public paleta: go.Palette = null;
   JSONExport: string;
-  constructor(public dialog: MatDialog) { }
+  public objetosDiagrama: any[];
+  constructor(public dialog: MatDialog) {
+    this.objetosDiagrama = [];
+  }
 
   ngOnInit() {
   }
@@ -49,6 +52,8 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
     //     $(go.TextBlock, { margin: 5 },
     //       new go.Binding('text', 'key'))
     //   );
+
+
 
     this.diagrama.nodeTemplate =
       $(go.Node, 'Vertical',
@@ -74,7 +79,6 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
           new go.Binding('text', 'text')));
 
     this.diagrama.undoManager.isEnabled = true;
-
     // create the Palette
     const myPalette =
       $(go.Palette, 'divPallet');
@@ -146,8 +150,21 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
     // when a node is double-clicked, add a child to it
     this.diagrama.addDiagramListener('ObjectDoubleClicked', (e: any) => {
       const node = e.subject.part.data;
-      this.dialog.open(ConfigDialogComponent, { width: '500px', maxHeight: '750px', data: node });
+      const dialog = this.dialog.open(ConfigDialogComponent, {
+        width: '500px', maxHeight: '750px', data: {
+          node,
+          diagrama: this.objetosDiagrama
+        }});
+      dialog.afterClosed().subscribe(result => {
+        if (result) {
+          this.objetosDiagrama.push(result);
+        }
+      });
     });
+    // this.diagrama.addDiagramListener('commandHandler.canDeleteSelection', (e: any) => {
+    //   const node = e.diagram.selection.first();
+    //   console.log(node);
+    // });
   }
   openImportDialog() {
     const dialogRef = this.dialog.open(ImportTemplateDialogComponent, { width: '600px'});
@@ -163,5 +180,7 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
   }
   clear() {
     this.diagrama.model = go.Model.fromJson(this.clearJson);
+  }
+  run() {
   }
 }

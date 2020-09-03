@@ -157,6 +157,11 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
         }});
       dialog.afterClosed().subscribe(result => {
         if (result) {
+          this.objetosDiagrama.forEach((value, index) => {
+            if (value.id === result.id) {
+              this.objetosDiagrama.splice(index, 1);
+            }
+          });
           this.objetosDiagrama.push(result);
         }
       });
@@ -182,5 +187,6 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
     this.diagrama.model = go.Model.fromJson(this.clearJson);
   }
   run() {
+    console.log(this.objetosDiagrama);
   }
 }

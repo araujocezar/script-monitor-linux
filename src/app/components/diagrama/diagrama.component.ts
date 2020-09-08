@@ -41,6 +41,15 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
       {
         LinkDrawn: maybeChangeLinkCategory,     // these two DiagramEvents call a
         LinkRelinked: maybeChangeLinkCategory,  // function that is defined below
+        // SelectionDeleted(e) {
+        //   e.subject.each( (key) => {
+        //     this.objetosDiagrama.forEach((value, index) => {
+        //       if (value.id === key.part.data.key) {
+        //         this.objetosDiagrama.splice(index, 1);
+        //       }
+        //     });
+        //   });
+        // }
       });
 
     // this.diagrama.nodeTemplate =
@@ -166,10 +175,15 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
         }
       });
     });
-    // this.diagrama.addDiagramListener('commandHandler.canDeleteSelection', (e: any) => {
-    //   const node = e.diagram.selection.first();
-    //   console.log(node);
-    // });
+    this.diagrama.addDiagramListener('SelectionDeleting', (e: any) => {
+      e.subject.each((key) => {
+        this.objetosDiagrama.forEach((value, index) => {
+          if (value.id === key.part.data.key) {
+            this.objetosDiagrama.splice(index, 1);
+          }
+        });
+      });
+    });
   }
   openImportDialog() {
     const dialogRef = this.dialog.open(ImportTemplateDialogComponent, { width: '600px'});

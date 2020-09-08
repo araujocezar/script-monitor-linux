@@ -15,7 +15,7 @@ import { ConfigDialogComponent } from './components/config-dialog/config-dialog.
 import { ImportTemplateDialogComponent } from './components/import-template-dialog/import-template-dialog.component';
 import { ExportTemplateDialogComponent } from './components/export-template-dialog/export-template-dialog.component';
 import { FormControl, FormGroupDirective, NgForm, Validators, ReactiveFormsModule } from '@angular/forms';
-
+import { CKEditorModule } from 'ckeditor4-angular';
 
 @NgModule({
   declarations: [
@@ -46,7 +46,8 @@ import { FormControl, FormGroupDirective, NgForm, Validators, ReactiveFormsModul
     MatInputModule,
     ReactiveFormsModule,
     MatRadioModule,
-    MatSelectModule
+    MatSelectModule,
+    CKEditorModule
 
   ],
   providers: [],

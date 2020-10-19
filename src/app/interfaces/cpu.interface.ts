@@ -1,4 +1,5 @@
 export interface Cpu {
+    type: number;
     id: number;
     comment?: string;
     core: string;

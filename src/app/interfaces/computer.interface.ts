@@ -1,4 +1,5 @@
 export interface Computer {
+    type: number;
     id: number;
     comment?: string;
     data: boolean;

@@ -33,7 +33,6 @@ export class ConfigDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<ConfigDialogComponent>
   ) {
     this.diagrama = data.diagrama;
-    console.log(this.diagrama);
     this.idNode = data.node.key;
     this.hdForm = this.fb.group({
       blocks: [false],
@@ -115,6 +114,7 @@ export class ConfigDialogComponent implements OnInit {
     // dicionairo keys 1- computador, 2 - cpu, 3 -rede, 4-processos, 5-hd
     if (this.data.node.type === 1) {
       this.computer = {
+        type: this.data.node.type,
         id: this.idNode,
         comment: this.computerForm.controls.comment.value,
         data: this.computerForm.controls.data.value,
@@ -141,6 +141,7 @@ export class ConfigDialogComponent implements OnInit {
     }
     if (this.data.node.type === 2) {
       this.cpu = {
+        type: this.data.node.type, 
         id: this.idNode,
         comment: this.cpuForm.controls.comment.value,
         core: this.cpuForm.controls.core.value,
@@ -160,6 +161,7 @@ export class ConfigDialogComponent implements OnInit {
     }
     if (this.data.node.type === 3) {
       this.network = {
+        type: this.data.node.type,
         id: this.idNode,
         comment: this.networkForm.controls.comment.value,
         download_kb: this.networkForm.controls.download_kb.value,
@@ -172,6 +174,7 @@ export class ConfigDialogComponent implements OnInit {
     }
     if (this.data.node.type === 4) {
       this.process = {
+        type: this.data.node.type,
         id: this.idNode,
         comment: this.processForm.controls.comment.value,
         cpu_core: this.processForm.controls.cpu_core.value,
@@ -192,6 +195,7 @@ export class ConfigDialogComponent implements OnInit {
     }
     if (this.data.node.type === 5) {
       this.hd = {
+        type: this.data.node.type,
         id: this.idNode,
         blocks: this.hdForm.controls.blocks.value,
         comment: this.hdForm.controls.comment.value,

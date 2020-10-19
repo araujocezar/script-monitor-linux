@@ -1,0 +1,180 @@
+<h1 mat-dialog-title>Run configs</h1>
+<div>
+        <div>
+            <form [formGroup]="runForm" autocomplete="off" fxLayout="column" fxLayoutGap="12px">
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="40">
+                        <label>Type:</label>
+                    </div>
+                    <div fxFlex="60">
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="type">
+                            <mat-radio-button [value]="1" (change)="changeType()">Remote</mat-radio-button>
+                            <mat-radio-button [value]="0" (change)="changeType()">Local</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <mat-form-field class="example-full-width" *ngIf="remote">
+                    <mat-label>IP</mat-label>
+                    <input matInput formControlName="ip">
+                </mat-form-field>
+                <mat-form-field class="example-full-width" *ngIf="remote">
+                    <mat-label>User</mat-label>
+                    <input matInput formControlName="user">
+                </mat-form-field>
+                <mat-form-field class="example-full-width" *ngIf="remote"> 
+                    <mat-label>Password</mat-label>
+                    <input matInput formControlName="password">
+                </mat-form-field>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="40">
+                        <label>Timer:</label>
+                    </div>
+                    <div fxFlex="60">
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="40px" formControlName="timer">
+                            <mat-radio-button [value]="true" (change)="changeTimer()">True</mat-radio-button>
+                            <mat-radio-button [value]="false" (change)="changeTimer()">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <mat-form-field class="example-full-width" *ngIf="tempo">
+                    <mat-label>Seconds</mat-label>
+                    <input matInput formControlName="seconds">
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Monitoring Frequency(Sec.)</mat-label>
+                    <input matInput formControlName="frequency">
+                </mat-form-field>
+                <!-- <mat-form-field class="example-full-width">
+                    <mat-label>Name</mat-label>
+                    <input matInput formControlName="name">
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Password</mat-label>
+                    <input matInput formControlName="password">
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <mat-label>User</mat-label>
+                    <input matInput formControlName="user">
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Monitoring Time Second</mat-label>
+                    <input matInput formControlName="monitoring_time_second">
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Sampling Frequency Second</mat-label>
+                    <input matInput formControlName="sampling_frequency_second">
+                </mat-form-field>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>Data</label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="data">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>Hour </label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="hour">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>Memory Buffers</label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px"
+                            formControlName="memory_buffers">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>Memory Cache:</label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px"
+                            formControlName="memory_cache">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>Memory Shared: </label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px"
+                            formControlName="memory_shared">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>Memory Total </label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px"
+                            formControlName="memory_total">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>Memory Used </label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="memory_used">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>RSA:</label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="rsa">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div fxLayoutGap="14px" fxFlex>
+                    <div fxFlex="50">
+                        <label>Swap Free </label>
+                    </div>
+                    <div fxFlex>
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="swap_free">
+                            <mat-radio-button [value]="true">True</mat-radio-button>
+                            <mat-radio-button [value]="false">False</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Comment</mat-label>
+                    <input matInput formControlName="comment">
+                </mat-form-field> -->
+            </form>
+    </div>    
+</div>
+<div mat-dialog-actions fxLayoutAlign="end center">
+    <button color="warn" mat-button mat-dialog-close>CLOSE</button>
+    <button (click)="run()" color="primary" mat-button>RUN</button>
+</div>

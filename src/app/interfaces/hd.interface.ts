@@ -1,4 +1,5 @@
 export interface Hd {
+    type: number;
     id: number;
     blocks: boolean;
     comment?: boolean;

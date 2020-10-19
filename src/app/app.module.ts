@@ -16,6 +16,7 @@ import { ImportTemplateDialogComponent } from './components/import-template-dial
 import { ExportTemplateDialogComponent } from './components/export-template-dialog/export-template-dialog.component';
 import { FormControl, FormGroupDirective, NgForm, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CKEditorModule } from 'ckeditor4-angular';
+import { RunDialogComponent } from './components/run-dialog/run-dialog.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { CKEditorModule } from 'ckeditor4-angular';
     DiagramaComponent,
     ConfigDialogComponent,
     ImportTemplateDialogComponent,
-    ExportTemplateDialogComponent
+    ExportTemplateDialogComponent,
+    RunDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -52,6 +54,6 @@ import { CKEditorModule } from 'ckeditor4-angular';
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [ConfigDialogComponent, ImportTemplateDialogComponent, ExportTemplateDialogComponent]
+  entryComponents: [ConfigDialogComponent, ImportTemplateDialogComponent, ExportTemplateDialogComponent, RunDialogComponent]
 })
 export class AppModule { }

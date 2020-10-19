@@ -214,7 +214,47 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(RunDialogComponent, { width: '400px'});
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.script = this.montagemScript();
+        this.script = `
+        #!/bin/bash <br>
+        # Monitoramento local.<br>
+        # Tempo, CPU, Memória, Disco, Rede LAN, Rede Wi-Fi, Processos Zumbis. <br>
+
+        # Pré-requisitos básicos: date, mpstat, free, df, cat, ps aux.<br>
+        # Pré-requisitos auxiliares: echo, awk, cut, gawk, grep, head, sleep, wc.<br>
+
+        # Pré-requisito de execução: chmod +x monitoramento-local.sh (torna o arquivo executável)<br>
+        # Execução: ./monitoramento-local.sh
+        <br>
+        <br>
+        echo Data Hour CpuUser CpuNice CpuSys CpuIOwait CpuIrq CpuSoft
+        CpuSteal CpuGuest CpuGnice CpuIdle MemTotal MemUsed MemFree MemShared MemBuffers
+        MemCached SwapTotal SwapUsed SwapFree DiskBlocks DiskUsedkb DiskAvail DiskUsedPercent
+        Eth0Download Eth0Upload Eth0DownPacket Eth0UpPacket LocalDownload LocalUpload LocalDownPacket
+        LocalUpPacket WifiDownload WifiUpload WifiDownPacket WifiUpPacket NumZumbis > log.txt
+        <br>
+        <br>
+        echo Monitoring...
+        <br>
+        ${result.timer ? 'cont = 1; <br>' : ''}
+        while [${result.timer ? '$cont -le ' + result.seconds : ' True '}]
+        <br>
+        do
+        <br>
+        <br>
+        ${this.montagemScript()}
+        echo $data $hora $cpuuser $cpunice $cpusys $cpuiowait $cpuirq $cpusoft $cpusteal $cpuguest $cpugnice $cpuidle $memtotal $memused
+        $memfree $memshared $membuffers $memcached $swaptotal $swapused $swapfree $diskblocks $diskusedkb $diskavail $diskusedpercent
+        $eth0download $eth0upload $eth0downpacket $eth0uppacket $localdownload $localupload $localdownpacket $localuppacket
+        $wifidownload
+        $wifiupload $wifidownpacket $wifiuppacket $numzumbis >> log.txt
+        <br>
+        <br>
+        ${result.timer ? 'cont =`expr $cont + 1`<br>' : ''}
+        sleep ${result.frequency ? result.frequency : '1'}
+        <br>
+        done
+        `;
+        // this.script += this.montagemScript();
         // this.script = `
         // #!/bin/bash <br>
         // # Monitoramento local.<br>
@@ -300,7 +340,74 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
 
       }
       if (objeto.type === 3) {
-
+        Object.keys(objeto).forEach(key => {
+          if (key === 'type' && objeto[key] === 3) {
+            script = script + ' ' + NETWORK.eth01 + '<br>';
+            script = script + ' ' + NETWORK.local1 + '<br>';
+            script = script + ' ' + NETWORK.wifi1 + '<br>';
+            script = script + ' ' + NETWORK.sleep + '<br>';
+            script = script + ' ' + NETWORK.eth02 + '<br>';
+            script = script + ' ' + NETWORK.local2 + '<br>';
+            script = script + ' ' + NETWORK.wifi2 + '<br>';
+            script = script += '<br>';
+          }
+          if (key === 'download_kb' && objeto[key] === true) {
+            script = script + ' ' + NETWORK.eth0download + '<br>';
+            script = script + ' ' + NETWORK.eth0download2 + '<br>';
+            script = script + ' ' + NETWORK.eth0downpacket + '<br>';
+            script = script += '<br>';
+            script = script + ' ' + NETWORK.wifidownload1 + '<br>';
+            script = script + ' ' + NETWORK.wifidownload2 + '<br>';
+            script = script + ' ' + NETWORK.wifidownload + '<br>';
+            script = script += '<br>';
+            script = script + ' ' + NETWORK.localdownload1 + '<br>';
+            script = script + ' ' + NETWORK.localdownload2 + '<br>';
+            script = script + ' ' + NETWORK.localdownload + '<br>';
+            script = script += '<br>';
+          }
+          if (key === 'download_packet' && objeto[key] === true) {
+            script = script + ' ' + NETWORK.eth0downpacket1 + '<br>';
+            script = script + ' ' + NETWORK.eth0downpacket2 + '<br>';
+            script = script + ' ' + NETWORK.eth0downpacket + '<br>';
+            script = script += '<br>';
+            script = script + ' ' + NETWORK.wifidownpacket1 + '<br>';
+            script = script + ' ' + NETWORK.wifidownpacket2 + '<br>';
+            script = script + ' ' + NETWORK.wifidownpacket + '<br>';
+            script = script += '<br>';
+            script = script + ' ' + NETWORK.localdownpacket1 + '<br>';
+            script = script + ' ' + NETWORK.localdownpacket2 + '<br>';
+            script = script + ' ' + NETWORK.localdownpacket + '<br>';
+            script = script += '<br>';
+          }
+          if (key === 'upload_kb' && objeto[key] === true) {
+            script = script + ' ' + NETWORK.eth0upload1 + '<br>';
+            script = script + ' ' + NETWORK.eth0upload2 + '<br>';
+            script = script + ' ' + NETWORK.eth0upload + '<br>';
+            script = script += '<br>';
+            script = script + ' ' + NETWORK.wifiupload1 + '<br>';
+            script = script + ' ' + NETWORK.wifiupload2 + '<br>';
+            script = script + ' ' + NETWORK.wifiupload + '<br>';
+            script = script += '<br>';
+            script = script + ' ' + NETWORK.localupload1 + '<br>';
+            script = script + ' ' + NETWORK.localupload2 + '<br>';
+            script = script + ' ' + NETWORK.localupload + '<br>';
+            script = script += '<br>';
+          }
+          if (key === 'upload_packet' && objeto[key] === true) {
+            script = script + ' ' + NETWORK.eth0uppacket1 + '<br>';
+            script = script + ' ' + NETWORK.eth0uppacket2 + '<br>';
+            script = script + ' ' + NETWORK.eth0uppacket + '<br>';
+            script = script += '<br>';
+            script = script + ' ' + NETWORK.wifiuppacket1 + '<br>';
+            script = script + ' ' + NETWORK.wifiuppacket2 + '<br>';
+            script = script + ' ' + NETWORK.wifiuppacket + '<br>';
+            script = script += '<br>';
+            script = script + ' ' + NETWORK.localuppacket1 + '<br>';
+            script = script + ' ' + NETWORK.localuppacket2 + '<br>';
+            script = script + ' ' + NETWORK.localuppacket + '<br>';
+            script = script += '<br>';
+          }
+        });
       }
       if (objeto.type === 4) {
 

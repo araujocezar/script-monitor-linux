@@ -1,4 +1,4 @@
-import { CPU, DISK, NETWORK } from './../../interfaces/scripts-local.interface';
+import { CPU, DISK, NETWORK, COMPUTER } from './../../interfaces/scripts-local.interface';
 import { RunDialogComponent } from './../run-dialog/run-dialog.component';
 import { ExportTemplateDialogComponent } from './../export-template-dialog/export-template-dialog.component';
 import { ImportTemplateDialogComponent } from './../import-template-dialog/import-template-dialog.component';
@@ -9,6 +9,7 @@ import { DataSyncService, DiagramComponent, PaletteComponent } from 'gojs-angula
 import { MatDialog } from '@angular/material';
 import { stringify } from 'querystring';
 import { cpuUsage } from 'process';
+import { InfoDialogComponent } from '../info-dialog/info-dialog.component';
 
 const $ = go.GraphObject.make;
 
@@ -84,8 +85,11 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
         $(go.Picture,
           { maxSize: new go.Size(50, 50) },
           new go.Binding('source', 'img'),
-          { portId: '', fromLinkable: true, toLinkable: true, cursor: 'pointer' }
-          ),
+          { portId: '', cursor: 'pointer' },
+          new go.Binding('fromLinkable', 'from'),
+          new go.Binding('toLinkable', 'to')
+          )
+          ,
         $(go.TextBlock,
           {
             margin: new go.Margin(3, 0, 0, 0),
@@ -125,11 +129,11 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
 
     // the list of data to show in the Palette
     myPalette.model.nodeDataArray = [
-      { head: 'Computer', key: '1', img: '../../assets/computer.png', type: 1 },
-      { head: 'CPU', key: '2', img: '../../assets/cpu.png', type: 2 },
-      { head: 'Network', key: '3', img: '../../assets/rede.png', type: 3 },
-      { head: 'Process', key: '4', img: '../../assets/processo.png', type: 4 },
-      { head: 'HD', key: '5', img: '../../assets/hdd.png', type: 5 }
+      { head: 'Computer', key: '1', img: '../../assets/computer.png', type: 1 , from: true, to: true},
+      { head: 'CPU', key: '2', img: '../../assets/cpu.png', type: 2 , to: true},
+      { head: 'Network', key: '3', img: '../../assets/rede.png', type: 3, to: true },
+      { head: 'Process', key: '4', img: '../../assets/processo.png', type: 4, to: true },
+      { head: 'HD', key: '5', img: '../../assets/hdd.png', type: 5, to: true }
     ];
     // dicionairo keys 1- computador, 2 - cpu, 3 -rede, 4-processos, 5-hd
 
@@ -160,6 +164,13 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
       const link = e.subject;
       const linktolink = (link.fromNode.isLinkLabel || link.toNode.isLinkLabel);
       e.diagram.model.setCategoryForLinkData(link.data, (linktolink ? 'linkToLink' : ''));
+      let obj  = [];
+      obj = e.diagram.model.linkDataArray;
+      // obj.forEach(element => {
+      //   if(element.from)
+      //   pais = [...element.from];
+      //   console.log(pais);
+      // });
     }
 
 
@@ -206,102 +217,153 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
   }
   clear() {
     this.diagrama.model = go.Model.fromJson(this.clearJson);
-    this.objetosDiagrama = null;
-    this.script = null;
+    this.objetosDiagrama = [];
+    this.script = 'hello, the script will appear here!';
+  }
+  openInfoDialog() {
+    const dialogRef = this.dialog.open(InfoDialogComponent);
+  }
+
+  getInstancias() {
+    const objetos = this.diagrama.model.linkDataArray;
+    const objMostrar = [[]];
+    let index = 0;
+    let from = 0;
+    objetos.forEach(element => {
+      if (objMostrar[index].length === 0) {
+        objMostrar[index].push(element.from);
+        objMostrar[index].push(element.to);
+        from = element.from;
+      } else if (element.from === from) {
+        objMostrar[index].push(element.to);
+      } else {
+        index += 1;
+        objMostrar.push([]);
+        objMostrar[index].push(element.from);
+        objMostrar[index].push(element.to);
+        from = element.from;
+      }
+    });
+    return objMostrar;
+  }
+
+  subScript(objMostrar) {
+    this.objetosDiagrama.forEach(element => {
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < objMostrar.length; i++) {
+        // tslint:disable-next-line:prefer-for-of
+        for (let k = 0; k < objMostrar[i].length; k++) {
+          if (objMostrar[i][k] === element.id) {
+            objMostrar[i][k] = element;
+            break;
+          }
+        }
+      }
+    });
+    return objMostrar;
   }
   run() {
-    console.log(this.objetosDiagrama);
+    let objMostrar = this.getInstancias();
+    console.log(objMostrar.length);
+    objMostrar = this.subScript(objMostrar);
     const dialogRef = this.dialog.open(RunDialogComponent, { width: '400px'});
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.script = `
-        #!/bin/bash <br>
-        # Monitoramento local.<br>
-        # Tempo, CPU, Memória, Disco, Rede LAN, Rede Wi-Fi, Processos Zumbis. <br>
-
-        # Pré-requisitos básicos: date, mpstat, free, df, cat, ps aux.<br>
-        # Pré-requisitos auxiliares: echo, awk, cut, gawk, grep, head, sleep, wc.<br>
-
-        # Pré-requisito de execução: chmod +x monitoramento-local.sh (torna o arquivo executável)<br>
-        # Execução: ./monitoramento-local.sh
-        <br>
-        <br>
-        echo Data Hour CpuUser CpuNice CpuSys CpuIOwait CpuIrq CpuSoft
-        CpuSteal CpuGuest CpuGnice CpuIdle MemTotal MemUsed MemFree MemShared MemBuffers
-        MemCached SwapTotal SwapUsed SwapFree DiskBlocks DiskUsedkb DiskAvail DiskUsedPercent
-        Eth0Download Eth0Upload Eth0DownPacket Eth0UpPacket LocalDownload LocalUpload LocalDownPacket
-        LocalUpPacket WifiDownload WifiUpload WifiDownPacket WifiUpPacket NumZumbis > log.txt
-        <br>
-        <br>
-        echo Monitoring...
-        <br>
-        ${result.timer ? 'cont = 1; <br>' : ''}
-        while [${result.timer ? '$cont -le ' + result.seconds : ' True '}]
-        <br>
-        do
-        <br>
-        <br>
-        ${this.montagemScript()}
-        echo $data $hora $cpuuser $cpunice $cpusys $cpuiowait $cpuirq $cpusoft $cpusteal $cpuguest $cpugnice $cpuidle $memtotal $memused
-        $memfree $memshared $membuffers $memcached $swaptotal $swapused $swapfree $diskblocks $diskusedkb $diskavail $diskusedpercent
-        $eth0download $eth0upload $eth0downpacket $eth0uppacket $localdownload $localupload $localdownpacket $localuppacket
-        $wifidownload
-        $wifiupload $wifidownpacket $wifiuppacket $numzumbis >> log.txt
-        <br>
-        <br>
-        ${result.timer ? 'cont =`expr $cont + 1`<br>' : ''}
-        sleep ${result.frequency ? result.frequency : '1'}
-        <br>
-        done
-        `;
-        // this.script += this.montagemScript();
-        // this.script = `
-        // #!/bin/bash <br>
-        // # Monitoramento local.<br>
-        // # Tempo, CPU, Memória, Disco, Rede LAN, Rede Wi-Fi, Processos Zumbis. <br>
-
-        // # Pré-requisitos básicos: date, mpstat, free, df, cat, ps aux.<br>
-        // # Pré-requisitos auxiliares: echo, awk, cut, gawk, grep, head, sleep, wc.<br>
-
-        // # Pré-requisito de execução: chmod +x monitoramento-local.sh (torna o arquivo executável)<br>
-        // # Execução: ./monitoramento-local.sh
-        // <br>
-        // <br>
-        // echo Data Hour CpuUser CpuNice CpuSys CpuIOwait CpuIrq CpuSoft
-        // CpuSteal CpuGuest CpuGnice CpuIdle MemTotal MemUsed MemFree MemShared MemBuffers
-        // MemCached SwapTotal SwapUsed SwapFree DiskBlocks DiskUsedkb DiskAvail DiskUsedPercent
-        // Eth0Download Eth0Upload Eth0DownPacket Eth0UpPacket LocalDownload LocalUpload LocalDownPacket
-        // LocalUpPacket WifiDownload WifiUpload WifiDownPacket WifiUpPacket NumZumbis > log.txt
-        // <br>
-        // <br>
-        // echo Monitoring...
-        // <br>
-        // ${result.timer ? 'cont = 1; <br>' : ''}
-        // while [${result.timer ? '$cont -le ' + result.seconds : ' True '}]
-        // <br>
-        // do
-        // <br>
-        // <br>
-        // echo $data $hora $cpuuser $cpunice $cpusys $cpuiowait $cpuirq $cpusoft $cpusteal $cpuguest $cpugnice $cpuidle $memtotal $memused
-        // $memfree $memshared $membuffers $memcached $swaptotal $swapused $swapfree $diskblocks $diskusedkb $diskavail $diskusedpercent
-        // $eth0download $eth0upload $eth0downpacket $eth0uppacket $localdownload $localupload $localdownpacket $localuppacket
-        // $wifidownload
-        // $wifiupload $wifidownpacket $wifiuppacket $numzumbis >> log.txt
-        // <br>
-        // <br>
-        // ${result.timer ? 'cont =`expr $cont + 1`<br>' : ''}
-        // sleep ${result.frequency ? result.frequency : '1'}
-        // <br>
-        // done
-        // `;
+        this.script = '#!/bin/bash <br>';
+        objMostrar.forEach(objeto => {
+          this.script += `
+          echo ${this.mostrarVariaveis(objeto)} > ${objeto[0].name}.txt
+          <br>
+          <br>
+          echo Monitoring...
+          <br>
+          ${result.timer ? 'cont = 1; <br>' : ''}
+          while [${result.timer ? '$cont -le ' + result.seconds : ' True '}]
+          <br>
+          do
+          <br>
+          <br>
+          ${this.montagemScript(objeto)}
+          <br>
+          echo ${this.mostrarVariaveisWhile(objeto)} >> ${objeto[0].name}.txt
+          <br>
+          <br>
+          ${result.timer ? 'cont =`expr $cont + 1`<br>' : ''}
+          sleep ${result.frequency ? result.frequency : '1'}
+          <br>
+          done
+          <br>
+          <br>
+          `;
+        });
       }
     });
   }
-  montagemScript() {
-    let script = '';
-    this.objetosDiagrama.forEach(objeto => {
-      if (objeto.type === 1) {
 
+  montagemScript(objetoD) {
+    let script = '';
+    objetoD.forEach(objeto => {
+      if (objeto.type === 1) {
+        Object.keys(objeto).forEach(key => {
+          if (key === 'type' && objeto[key] === 1) {
+            script = script += '<br>';
+            script = script + ' ' + COMPUTER.mem + '<br>';
+            script = script + ' ' + COMPUTER.tempo + '<br>';
+            script = script + ' ' + COMPUTER.swap + '<br>';
+          }
+          // if (key === 'data' && objeto[key] === true || key === 'hour' && objeto[key] === true ) {
+          //   script = script += '<br>';
+          //   script = script + ' ' + COMPUTER.tempo + '<br>';
+          // }
+          if (key === 'data' && objeto[key] === true) {
+            script = script += '<br>';
+            script = script + ' ' + COMPUTER.data + '<br>';
+          }
+          if (key === 'hour' && objeto[key] === true) {
+            script = script + ' ' + COMPUTER.hora + '<br>';
+          }
+          // if (key === 'memory_buffers' && objeto[key] === true || key === 'memory_cache' && objeto[key] === true ||
+          //   key === 'memory_cache' && objeto[key] === true || key === 'memory_free' && objeto[key] === true ||
+          //   key === 'memory_shared' && objeto[key] === true || key === 'memory_total' && objeto[key] === true ||
+          //   key === 'memory_used' && objeto[key] === true) {
+          //     script = script += '<br>';
+          //     script = script + ' ' + COMPUTER.mem + '<br>';
+          // }
+          if (key === 'memory_buffers' && objeto[key] === true) {
+            script = script + ' ' + COMPUTER.membuffers + '<br>';
+          }
+          if (key === 'memory_cache' && objeto[key] === true) {
+            script = script + ' ' + COMPUTER.memcached + '<br>';
+          }
+          if (key === 'memory_free' && objeto[key] === true) {
+            script = script + ' ' + COMPUTER.memfree + '<br>';
+          }
+          if (key === 'memory_shared' && objeto[key] === true) {
+            script = script + ' ' + COMPUTER.memshared + '<br>';
+          }
+          if (key === 'memory_total' && objeto[key] === true) {
+            script = script + ' ' + COMPUTER.memtotal + '<br>';
+          }
+          if (key === 'memory_used' && objeto[key] === true) {
+            script = script + ' ' + COMPUTER.memused + '<br>';
+          }
+          // if (key === 'swap_free' && objeto[key] === true || key === 'swap_total' && objeto[key] === true ||
+          //   key === 'swap_used' && objeto[key] === true || key === 'swap_used' && objeto[key] === true ) {
+          //   script = script + ' ' + COMPUTER.swap + '<br>';
+          // }
+          if (key === 'swap_free' && objeto[key] === true) {
+            script = script + ' ' + COMPUTER.swapfree + '<br>';
+          }
+          if (key === 'swap_total' && objeto[key] === true) {
+            script = script + ' ' + COMPUTER.swaptotal + '<br>';
+          }
+          if (key === 'swap_used' && objeto[key] === true) {
+            script = script + ' ' + COMPUTER.swapused + '<br>';
+          }
+          if (key === 'zombie_process_total' && objeto[key] === true) {
+            script = script + ' ' + COMPUTER.numzumbis + '<br>';
+          }
+        });
       }
       if (objeto.type === 2) {
         Object.keys(objeto).forEach(key => {
@@ -435,6 +497,263 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
           }
           if (key === 'used_percent' && objeto[key] === true) {
             script = script + ' ' + DISK.diskusedpercent + '<br>';
+          }
+        });
+      }
+    });
+    return script;
+  }
+
+  mostrarVariaveis(objetoD) {
+      let script = '';
+      objetoD.forEach(objeto => {
+        if (objeto.type === 1) {
+          Object.keys(objeto).forEach(key => {
+            if (key === 'data' && objeto[key] === true) {
+              script = script + 'Data' + ' ';
+            }
+            if (key === 'hour' && objeto[key] === true) {
+              script = script + 'Hour' + ' ';
+            }
+            if (key === 'memory_buffers' && objeto[key] === true) {
+              script = script + 'MemBuffers' + ' ';
+            }
+            if (key === 'memory_cache' && objeto[key] === true) {
+              script = script + 'MemCached' + ' ';
+            }
+            if (key === 'memory_free' && objeto[key] === true) {
+              script = script + 'MemFree' + ' ';
+            }
+            if (key === 'memory_shared' && objeto[key] === true) {
+              script = script + 'MemShared' + ' ';
+            }
+            if (key === 'memory_total' && objeto[key] === true) {
+              script = script + 'MemTotal' + ' ';
+            }
+            if (key === 'memory_used' && objeto[key] === true) {
+              script = script + 'MemUsed' + ' ';
+            }
+            if (key === 'swap_free' && objeto[key] === true) {
+              script = script + 'SwapFree' + ' ';
+            }
+            if (key === 'swap_total' && objeto[key] === true) {
+              script = script + 'SwapTotal' + ' ';
+            }
+            if (key === 'swap_used' && objeto[key] === true) {
+              script = script + 'SwapUsed' + ' ';
+            }
+            if (key === 'zombie_process_total' && objeto[key] === true) {
+              script = script + 'NumZumbis' + ' ';
+            }
+          });
+        }
+        if (objeto.type === 2) {
+          Object.keys(objeto).forEach(key => {
+            if (key === 'gnice' && objeto[key] === true) {
+              script = script + 'CpuGnice' + ' ';
+            }
+            if (key === 'guest' && objeto[key] === true) {
+              script = script + 'CpuGuest' + ' ';
+            }
+            if (key === 'idle' && objeto[key] === true) {
+              script = script + 'CpuIdle' + ' ';
+            }
+            if (key === 'iowait' && objeto[key] === true) {
+              script = script + 'CpuIOwait' + ' ';
+            }
+            if (key === 'irq' && objeto[key] === true) {
+              script = script + 'CpuIrq' + ' ';
+            }
+            if (key === 'soft' && objeto[key] === true) {
+              script = script + 'CpuSoft' + ' ';
+            }
+            if (key === 'steal' && objeto[key] === true) {
+              script = script + 'CpuSteal' + ' ';
+            }
+            if (key === 'sys' && objeto[key] === true) {
+              script = script + 'CpuSys' + ' ';
+            }
+            if (key === 'user' && objeto[key] === true) {
+              script = script + 'CpuUser' + ' ';
+            }
+          });
+
+        }
+        if (objeto.type === 3) {
+          Object.keys(objeto).forEach(key => {
+            if (key === 'download_kb' && objeto[key] === true) {
+              script = script + 'Eth0Download' + ' ';
+              script = script + 'LocalDownload' + ' ';
+              script = script + 'WifiDownload' + ' ';
+            }
+            if (key === 'download_packet' && objeto[key] === true) {
+              script = script + 'Eth0DownPacket' + ' ';
+              script = script + 'LocalDownPacket' + ' ';
+              script = script + 'WifiDownPacket' + ' ';
+            }
+            if (key === 'upload_kb' && objeto[key] === true) {
+              script = script + 'Eth0Upload' + ' ';
+              script = script + 'LocalUpload' + ' ';
+              script = script + 'WifiUpload' + ' ';
+
+            }
+            if (key === 'upload_packet' && objeto[key] === true) {
+              script = script + 'Eth0UpPacket' + ' ';
+              script = script + 'LocalUpPacket' + ' ';
+              script = script + 'WifiUpPacket' + ' ';
+            }
+          });
+        }
+        if (objeto.type === 4) {
+
+        }
+        if (objeto.type === 5) {
+          Object.keys(objeto).forEach(key => {
+            if (key === 'blocks' && objeto[key] === true) {
+              script = script + 'DiskBlocks' + ' ';
+            }
+            if (key === 'free_kb' && objeto[key] === true) {
+              script = script + 'DiskFreeKb' + ' ';
+            }
+            if (key === 'free_percent' && objeto[key] === true) {
+              script = script + 'DiskFreePercent' + ' ';
+            }
+            if (key === 'total' && objeto[key] === true) {
+              script = script + 'DiskAvail' + ' ';
+            }
+            if (key === 'used_kb' && objeto[key] === true) {
+              script = script + 'DiskUsedkb' + ' ';
+            }
+            if (key === 'used_percent' && objeto[key] === true) {
+              script = script + 'DiskUsedPercent' + ' ';
+            }
+          });
+        }
+      });
+      return script;
+    }
+  mostrarVariaveisWhile(objetoD) {
+    let script = '';
+    objetoD.forEach(objeto => {
+      if (objeto.type === 1) {
+        Object.keys(objeto).forEach(key => {
+          if (key === 'data' && objeto[key] === true) {
+            script = script + '$Data' + ' ';
+          }
+          if (key === 'hour' && objeto[key] === true) {
+            script = script + '$Hour' + ' ';
+          }
+          if (key === 'memory_buffers' && objeto[key] === true) {
+            script = script + '$MemBuffers' + ' ';
+          }
+          if (key === 'memory_cache' && objeto[key] === true) {
+            script = script + '$MemCached' + ' ';
+          }
+          if (key === 'memory_free' && objeto[key] === true) {
+            script = script + '$MemFree' + ' ';
+          }
+          if (key === 'memory_shared' && objeto[key] === true) {
+            script = script + '$MemShared' + ' ';
+          }
+          if (key === 'memory_total' && objeto[key] === true) {
+            script = script + '$MemTotal' + ' ';
+          }
+          if (key === 'memory_used' && objeto[key] === true) {
+            script = script + '$MemUsed' + ' ';
+          }
+          if (key === 'swap_free' && objeto[key] === true) {
+            script = script + '$SwapFree' + ' ';
+          }
+          if (key === 'swap_total' && objeto[key] === true) {
+            script = script + '$SwapTotal' + ' ';
+          }
+          if (key === 'swap_used' && objeto[key] === true) {
+            script = script + '$SwapUsed' + ' ';
+          }
+          if (key === 'zombie_process_total' && objeto[key] === true) {
+            script = script + '$NumZumbis' + ' ';
+          }
+        });
+      }
+      if (objeto.type === 2) {
+        Object.keys(objeto).forEach(key => {
+          if (key === 'gnice' && objeto[key] === true) {
+            script = script + '$CpuGnice' + ' ';
+          }
+          if (key === 'guest' && objeto[key] === true) {
+            script = script + '$CpuGuest' + ' ';
+          }
+          if (key === 'idle' && objeto[key] === true) {
+            script = script + '$CpuIdle' + ' ';
+          }
+          if (key === 'iowait' && objeto[key] === true) {
+            script = script + '$CpuIOwait' + ' ';
+          }
+          if (key === 'irq' && objeto[key] === true) {
+            script = script + '$CpuIrq' + ' ';
+          }
+          if (key === 'soft' && objeto[key] === true) {
+            script = script + '$CpuSoft' + ' ';
+          }
+          if (key === 'steal' && objeto[key] === true) {
+            script = script + '$CpuSteal' + ' ';
+          }
+          if (key === 'sys' && objeto[key] === true) {
+            script = script + '$CpuSys' + ' ';
+          }
+          if (key === 'user' && objeto[key] === true) {
+            script = script + '$CpuUser' + ' ';
+          }
+        });
+
+      }
+      if (objeto.type === 3) {
+        Object.keys(objeto).forEach(key => {
+          if (key === 'download_kb' && objeto[key] === true) {
+            script = script + '$Eth0Download' + ' ';
+            script = script + '$LocalDownload' + ' ';
+            script = script + '$WifiDownload' + ' ';
+          }
+          if (key === 'download_packet' && objeto[key] === true) {
+            script = script + '$Eth0DownPacket' + ' ';
+            script = script + '$LocalDownPacket' + ' ';
+            script = script + '$WifiDownPacket' + ' ';
+          }
+          if (key === 'upload_kb' && objeto[key] === true) {
+            script = script + '$Eth0Upload' + ' ';
+            script = script + '$LocalUpload' + ' ';
+            script = script + '$WifiUpload' + ' ';
+
+          }
+          if (key === 'upload_packet' && objeto[key] === true) {
+            script = script + '$Eth0UpPacket' + ' ';
+            script = script + '$LocalUpPacket' + ' ';
+            script = script + '$WifiUpPacket' + ' ';
+          }
+        });
+      }
+      if (objeto.type === 4) {
+
+      }
+      if (objeto.type === 5) {
+        Object.keys(objeto).forEach(key => {
+          if (key === 'blocks' && objeto[key] === true) {
+            script = script + '$DiskBlocks' + ' ';
+          }
+          if (key === 'free_kb' && objeto[key] === true) {
+            script = script + '$DiskFreeKb' + ' ';
+          }
+          if (key === 'free_percent' && objeto[key] === true) {
+            script = script + '$DiskFreePercent' + ' ';
+          }
+          if (key === 'total' && objeto[key] === true) {
+            script = script + '$DiskAvail' + ' ';
+          }
+          if (key === 'used_kb' && objeto[key] === true) {
+            script = script + '$DiskUsedkb' + ' ';
+          }
+          if (key === 'used_percent' && objeto[key] === true) {
+            script = script + '$DiskUsedPercent' + ' ';
           }
         });
       }

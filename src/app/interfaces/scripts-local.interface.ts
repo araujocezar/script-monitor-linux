@@ -14,21 +14,21 @@ export const CPU = {
 };
 
 export const COMPUTER = {
-    mem: `free | grep Mem`,
-    memtotal: `echo $mem | awk '{print $2}'`,
-    memused: `echo $mem | awk '{print $3}'`,
-    memfree: `echo $mem | awk '{print $4}'`,
-    memshared: `echo $mem | awk '{print $5}'`,
-    membuffers: `echo $mem | awk '{print $6}'`,
-    memcached: `echo $mem | awk '{print $7}'`,
-    swap: `free | grep Swap`,
-    swaptotal: `echo $swap | awk '{print $2}'`,
-    swapused: `echo $swap | awk '{print $3}'`,
-    swapfree: `echo $swap | awk '{print $4}'`,
-    numzumbis: `ps aux | awk '{if ($8~"Z"){print $0}}' | wc -l`,
-    tempo: `date --rfc-3339=seconds`,
-    data: `echo $tempo | awk '{print $1}'`,
-    hora: `echo $tempo | cut -d\  -f2 | gawk 'BEGIN{FS="-"}{print $1}'`
+    mem: `mem = free | grep Mem`,
+    memtotal: `memtotal = echo $mem | awk '{print $2}'`,
+    memused: `memused = echo $mem | awk '{print $3}'`,
+    memfree: `memfree = echo $mem | awk '{print $4}'`,
+    memshared: `memshared = echo $mem | awk '{print $5}'`,
+    membuffers: `membuffers = echo $mem | awk '{print $6}'`,
+    memcached: `memcached = echo $mem | awk '{print $7}'`,
+    swap: `swap = free | grep Swap`,
+    swaptotal: `swaptotal = echo $swap | awk '{print $2}'`,
+    swapused: `swapused = echo $swap | awk '{print $3}'`,
+    swapfree: `swapfree = echo $swap | awk '{print $4}'`,
+    numzumbis: `numzumbis = ps aux | awk '{if ($8~"Z"){print $0}}' | wc -l`,
+    tempo: `tempo = date --rfc-3339=seconds`,
+    data: `data = echo $tempo | awk '{print $1}'`,
+    hora: `hora = echo $tempo | cut -d\  -f2 | gawk 'BEGIN{FS="-"}{print $1}'`
 };
 
 export const DISK = {

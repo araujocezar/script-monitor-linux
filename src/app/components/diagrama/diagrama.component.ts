@@ -1,3 +1,4 @@
+import { Cabecalho } from './../../interfaces/cabecalho.interface';
 import { CPU, DISK, NETWORK, COMPUTER } from './../../interfaces/scripts-local.interface';
 import { RunDialogComponent } from './../run-dialog/run-dialog.component';
 import { ExportTemplateDialogComponent } from './../export-template-dialog/export-template-dialog.component';
@@ -164,13 +165,6 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
       const link = e.subject;
       const linktolink = (link.fromNode.isLinkLabel || link.toNode.isLinkLabel);
       e.diagram.model.setCategoryForLinkData(link.data, (linktolink ? 'linkToLink' : ''));
-      let obj  = [];
-      obj = e.diagram.model.linkDataArray;
-      // obj.forEach(element => {
-      //   if(element.from)
-      //   pais = [...element.from];
-      //   console.log(pais);
-      // });
     }
 
 
@@ -264,51 +258,147 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
   }
   run() {
     let objMostrar = this.getInstancias();
-    console.log(objMostrar.length);
+    let estruturaCompleta = false;
+    if (objMostrar[0].length > 0) {
+      estruturaCompleta = true;
+    }
     objMostrar = this.subScript(objMostrar);
     const dialogRef = this.dialog.open(RunDialogComponent, { width: '400px'});
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.script = '#!/bin/bash <br>';
-        objMostrar.forEach(objeto => {
+        if (estruturaCompleta) {
+          objMostrar.forEach(objeto => {
+            this.script += `
+            echo ${this.mostrarVariaveis(objeto)} > ${objeto[0].name}.txt
+            <br>
+            <br>
+            echo Monitoring...
+            <br>
+            ${result.timer ? 'cont = 1; <br>' : ''}
+            while [${result.timer ? '$cont -le ' + result.seconds : ' True '}]
+            <br>
+            do
+            <br>
+            <br>
+            ${this.montagemScript(objeto, result.ip, result.user, result.password)}
+            <br>
+            echo ${this.mostrarVariaveisWhile(objeto)} >> ${objeto[0].name}.txt
+            <br>
+            <br>
+            ${result.timer ? 'cont =`expr $cont + 1`<br>' : ''}
+            sleep ${result.frequency ? result.frequency : '1'}
+            <br>
+            done
+            <br>
+            <br>
+            `;
+          });
+        }
+      }
+      if (estruturaCompleta === false) {
+        this.objetosDiagrama.forEach(element => {
           this.script += `
-          echo ${this.mostrarVariaveis(objeto)} > ${objeto[0].name}.txt
-          <br>
-          <br>
-          echo Monitoring...
-          <br>
-          ${result.timer ? 'cont = 1; <br>' : ''}
-          while [${result.timer ? '$cont -le ' + result.seconds : ' True '}]
-          <br>
-          do
-          <br>
-          <br>
-          ${this.montagemScript(objeto)}
-          <br>
-          echo ${this.mostrarVariaveisWhile(objeto)} >> ${objeto[0].name}.txt
-          <br>
-          <br>
-          ${result.timer ? 'cont =`expr $cont + 1`<br>' : ''}
-          sleep ${result.frequency ? result.frequency : '1'}
-          <br>
-          done
-          <br>
-          <br>
-          `;
+            <br>
+            <br>
+            echo Monitoring...
+            <br>
+            ${result.timer ? 'cont = 1; <br>' : ''}
+            while [${result.timer ? '$cont -le ' + result.seconds : ' True '}]
+            <br>
+            do
+            <br>
+            <br>
+            ${this.montagemScriptPcs()}
+            <br>
+            <br>
+            <br>
+            ${result.timer ? 'cont =`expr $cont + 1`<br>' : ''}
+            sleep ${result.frequency ? result.frequency : '1'}
+            <br>
+            done
+            <br>
+            <br>
+            `;
         });
       }
     });
   }
 
-  montagemScript(objetoD) {
+  montagemScriptPcs() {
     let script = '';
-    objetoD.forEach(objeto => {
+    this.objetosDiagrama.forEach(objeto => {
       if (objeto.type === 1) {
         Object.keys(objeto).forEach(key => {
           if (key === 'type' && objeto[key] === 1) {
             script = script += '<br>';
             script = script + ' ' + COMPUTER.mem + '<br>';
             script = script + ' ' + COMPUTER.tempo + '<br>';
+            script = script + ' ' + COMPUTER.swap + '<br>';
+          }
+          if (key === 'data' && objeto[key] === true) {
+            script = script += '<br>';
+            script = script + ' ' + COMPUTER.data + '<br>';
+          }
+          if (key === 'hour' && objeto[key] === true) {
+            script = script + ' ' + COMPUTER.hora + '<br>';
+          }
+          if (key === 'memory_buffers' && objeto[key] === true) {
+            script = script + ' ' + COMPUTER.membuffers + '<br>';
+          }
+          if (key === 'memory_cache' && objeto[key] === true) {
+            script = script + ' ' + COMPUTER.memcached + '<br>';
+          }
+          if (key === 'memory_free' && objeto[key] === true) {
+            script = script + ' ' + COMPUTER.memfree + '<br>';
+          }
+          if (key === 'memory_shared' && objeto[key] === true) {
+            script = script + ' ' + COMPUTER.memshared + '<br>';
+          }
+          if (key === 'memory_total' && objeto[key] === true) {
+            script = script + ' ' + COMPUTER.memtotal + '<br>';
+          }
+          if (key === 'memory_used' && objeto[key] === true) {
+            script = script + ' ' + COMPUTER.memused + '<br>';
+          }
+          if (key === 'swap_free' && objeto[key] === true) {
+            script = script + ' ' + COMPUTER.swapfree + '<br>';
+          }
+          if (key === 'swap_total' && objeto[key] === true) {
+            script = script + ' ' + COMPUTER.swaptotal + '<br>';
+          }
+          if (key === 'swap_used' && objeto[key] === true) {
+            script = script + ' ' + COMPUTER.swapused + '<br>';
+          }
+          if (key === 'zombie_process_total' && objeto[key] === true) {
+            script = script + ' ' + COMPUTER.numzumbis + '<br>';
+          }
+        });
+      }
+    });
+    return script;
+  }
+
+  montagemScript(objetoD, ip?, user?, password?) {
+    let remoto = false;
+    let cabecalhoRemoto = '';
+    if (ip || user || password) {
+      remoto = true;
+      cabecalhoRemoto = `sshpass -p '${password}' ssh ${user}@${ip}`;
+    }
+    console.log(cabecalhoRemoto);
+    let script = '';
+    objetoD.forEach(objeto => {
+      if (objeto.type === 1) {
+        Object.keys(objeto).forEach(key => {
+          if (key === 'type' && objeto[key] === 1) {
+            script = script += '<br>';
+            script = script += 'mem =';
+            script = script + cabecalhoRemoto + ' ';
+            script = script + ' ' + COMPUTER.mem + '<br>';
+            script = script + ' ' + COMPUTER.tempo + '<br>';
+            script = script += 'swap =';
+            script = script + cabecalhoRemoto + ' ';
             script = script + ' ' + COMPUTER.swap + '<br>';
           }
           // if (key === 'data' && objeto[key] === true || key === 'hour' && objeto[key] === true ) {
@@ -361,6 +451,8 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
             script = script + ' ' + COMPUTER.swapused + '<br>';
           }
           if (key === 'zombie_process_total' && objeto[key] === true) {
+            script = script += 'numzumbis =';
+            script = script + cabecalhoRemoto + ' ';
             script = script + ' ' + COMPUTER.numzumbis + '<br>';
           }
         });
@@ -369,6 +461,8 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
         Object.keys(objeto).forEach(key => {
           if (key === 'type' && objeto[key] === 2) {
             script = script += '<br>';
+            script = script += 'cpu =';
+            script = script + cabecalhoRemoto + ' ';
             script = script + ' ' + CPU.cpu + objeto.core + ' ' + CPU.cpu2 + '<br>';
           }
           if (key === 'gnice' && objeto[key] === true) {
@@ -404,12 +498,24 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
       if (objeto.type === 3) {
         Object.keys(objeto).forEach(key => {
           if (key === 'type' && objeto[key] === 3) {
+            script = script += 'eth01 =';
+            script = script + cabecalhoRemoto + ' ';
             script = script + ' ' + NETWORK.eth01 + '<br>';
+            script = script += 'local1 =';
+            script = script + cabecalhoRemoto + ' ';
             script = script + ' ' + NETWORK.local1 + '<br>';
+            script = script += 'wifi1 =';
+            script = script + cabecalhoRemoto + ' ';
             script = script + ' ' + NETWORK.wifi1 + '<br>';
             script = script + ' ' + NETWORK.sleep + '<br>';
+            script = script += 'eth02 =';
+            script = script + cabecalhoRemoto + ' ';
             script = script + ' ' + NETWORK.eth02 + '<br>';
+            script = script += 'local2 =';
+            script = script + cabecalhoRemoto + ' ';
             script = script + ' ' + NETWORK.local2 + '<br>';
+            script = script += 'wifi2 =';
+            script = script + cabecalhoRemoto + ' ';
             script = script + ' ' + NETWORK.wifi2 + '<br>';
             script = script += '<br>';
           }
@@ -478,6 +584,8 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
         Object.keys(objeto).forEach(key => {
           if (key === 'type' && objeto[key] === 5) {
             script = script += '<br>';
+            script = script += 'disk =';
+            script = script + cabecalhoRemoto + ' ';
             script = script + ' ' + DISK.disk + ' ' + objeto.name + '<br>';
           }
           if (key === 'blocks' && objeto[key] === true) {
@@ -638,40 +746,40 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
       if (objeto.type === 1) {
         Object.keys(objeto).forEach(key => {
           if (key === 'data' && objeto[key] === true) {
-            script = script + '$Data' + ' ';
+            script = script + '$data' + ' ';
           }
           if (key === 'hour' && objeto[key] === true) {
-            script = script + '$Hour' + ' ';
+            script = script + '$hour' + ' ';
           }
           if (key === 'memory_buffers' && objeto[key] === true) {
-            script = script + '$MemBuffers' + ' ';
+            script = script + '$memBuffers' + ' ';
           }
           if (key === 'memory_cache' && objeto[key] === true) {
-            script = script + '$MemCached' + ' ';
+            script = script + '$memCached' + ' ';
           }
           if (key === 'memory_free' && objeto[key] === true) {
-            script = script + '$MemFree' + ' ';
+            script = script + '$memFree' + ' ';
           }
           if (key === 'memory_shared' && objeto[key] === true) {
-            script = script + '$MemShared' + ' ';
+            script = script + '$memShared' + ' ';
           }
           if (key === 'memory_total' && objeto[key] === true) {
-            script = script + '$MemTotal' + ' ';
+            script = script + '$memTotal' + ' ';
           }
           if (key === 'memory_used' && objeto[key] === true) {
-            script = script + '$MemUsed' + ' ';
+            script = script + '$memUsed' + ' ';
           }
           if (key === 'swap_free' && objeto[key] === true) {
-            script = script + '$SwapFree' + ' ';
+            script = script + '$swapFree' + ' ';
           }
           if (key === 'swap_total' && objeto[key] === true) {
-            script = script + '$SwapTotal' + ' ';
+            script = script + '$swapTotal' + ' ';
           }
           if (key === 'swap_used' && objeto[key] === true) {
-            script = script + '$SwapUsed' + ' ';
+            script = script + '$swapUsed' + ' ';
           }
           if (key === 'zombie_process_total' && objeto[key] === true) {
-            script = script + '$NumZumbis' + ' ';
+            script = script + '$numZumbis' + ' ';
           }
         });
       }

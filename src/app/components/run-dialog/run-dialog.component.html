@@ -3,10 +3,10 @@
         <div>
             <form [formGroup]="runForm" autocomplete="off" fxLayout="column" fxLayoutGap="12px">
                 <div fxLayoutGap="14px" fxFlex>
-                    <div fxFlex="40">
+                    <div fxFlex="50">
                         <label>Type:</label>
                     </div>
-                    <div fxFlex="60">
+                    <div fxFlex="50">
                         <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="type">
                             <mat-radio-button [value]="1" (change)="changeType()">Remote</mat-radio-button>
                             <mat-radio-button [value]="0" (change)="changeType()">Local</mat-radio-button>
@@ -26,18 +26,18 @@
                     <input matInput formControlName="password">
                 </mat-form-field>
                 <div fxLayoutGap="14px" fxFlex>
-                    <div fxFlex="40">
-                        <label>Timer:</label>
+                    <div fxFlex="50">
+                        <label>Experiment duration:</label>
                     </div>
-                    <div fxFlex="60">
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="40px" formControlName="timer">
-                            <mat-radio-button [value]="true" (change)="changeTimer()">True</mat-radio-button>
-                            <mat-radio-button [value]="false" (change)="changeTimer()">False</mat-radio-button>
+                    <div fxFlex="50">
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="25px" formControlName="timer">
+                            <mat-radio-button [value]="true" (change)="changeTimer()">Finite</mat-radio-button>
+                            <mat-radio-button [value]="false" (change)="changeTimer()">Infinite</mat-radio-button>
                         </mat-radio-group>
                     </div>
                 </div>
                 <mat-form-field class="example-full-width" *ngIf="tempo">
-                    <mat-label>Seconds</mat-label>
+                    <mat-label>Monitoring time(Sec.)</mat-label>
                     <input matInput formControlName="seconds">
                 </mat-form-field>
                 <mat-form-field class="example-full-width">

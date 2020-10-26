@@ -1,5 +1,5 @@
 export const CPU = {
-    cpu: 'cpu = `mpstat 1 1 | grep ',
+    cpu: '`mpstat 1 1 | grep ',
     cpu2: '| head -1`',
     cpuuser: `cpuuser = echo $cpu | awk '{print $3}'`,
     cpunice: `cpunice = echo $cpu | awk '{print $4}'`,
@@ -14,25 +14,25 @@ export const CPU = {
 };
 
 export const COMPUTER = {
-    mem: `mem = free | grep Mem`,
+    mem: `free | grep Mem`,
     memtotal: `memtotal = echo $mem | awk '{print $2}'`,
     memused: `memused = echo $mem | awk '{print $3}'`,
     memfree: `memfree = echo $mem | awk '{print $4}'`,
     memshared: `memshared = echo $mem | awk '{print $5}'`,
     membuffers: `membuffers = echo $mem | awk '{print $6}'`,
     memcached: `memcached = echo $mem | awk '{print $7}'`,
-    swap: `swap = free | grep Swap`,
+    swap: `free | grep Swap`,
     swaptotal: `swaptotal = echo $swap | awk '{print $2}'`,
     swapused: `swapused = echo $swap | awk '{print $3}'`,
     swapfree: `swapfree = echo $swap | awk '{print $4}'`,
-    numzumbis: `numzumbis = ps aux | awk '{if ($8~"Z"){print $0}}' | wc -l`,
+    numzumbis: `ps aux | awk '{if ($8~"Z"){print $0}}' | wc -l`,
     tempo: `tempo = date --rfc-3339=seconds`,
     data: `data = echo $tempo | awk '{print $1}'`,
     hora: `hora = echo $tempo | cut -d\  -f2 | gawk 'BEGIN{FS="-"}{print $1}'`
 };
 
 export const DISK = {
-    disk: `disk = df | grep`,
+    disk: `df | grep`,
     diskblocks: `diskblocks = echo $disk | awk '{print $2}'`,
     diskusedkb: `diskusedkb = echo $disk | awk '{print $3}'`,
     diskfreekb: `diskfreekb = echo $disk | awk '{print (100-$5)}'`,
@@ -42,13 +42,13 @@ export const DISK = {
 };
 
 export const NETWORK = {
-    eth01: `eth01 = cat /proc/net/dev | grep eth0`,
-    local1: `local1 = cat /proc/net/dev | grep lo`,
-    wifi1: `wifi1 = cat /proc/net/dev | grep wlan0`,
+    eth01: `cat /proc/net/dev | grep eth0`,
+    local1: `cat /proc/net/dev | grep lo`,
+    wifi1: `cat /proc/net/dev | grep wlan0`,
     sleep: `sleep = 1`,
-    eth02: `eth02 = cat /proc/net/dev | grep eth0`,
-    local2: `local2 = cat /proc/net/dev | grep lo`,
-    wifi2: `wifi2 = cat /proc/net/dev | grep wlan0`,
+    eth02: `cat /proc/net/dev | grep eth0`,
+    local2: `cat /proc/net/dev | grep lo`,
+    wifi2: `cat /proc/net/dev | grep wlan0`,
     eth0download1: `eth0download1 = echo $eth01 | awk '{print $2}'`,
     eth0download2: `eth0download2 = echo $eth02 | awk '{print $2}'`,
     eth0download: `eth0download = expr '(' $eth0download2 - $eth0download1 ')'`,

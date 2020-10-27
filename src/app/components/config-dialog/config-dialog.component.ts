@@ -3,7 +3,7 @@ import { Network } from './../../interfaces/network.interface';
 import { Process } from './../../interfaces/process.interface';
 import { Cpu } from './../../interfaces/cpu.interface';
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Hd } from './../../interfaces/hd.interface';
 
@@ -30,7 +30,8 @@ export class ConfigDialogComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<ConfigDialogComponent>
+    public dialogRef: MatDialogRef<ConfigDialogComponent>,
+    private snackbar: MatSnackBar
   ) {
     this.diagrama = data.diagrama;
     this.idNode = data.node.key;
@@ -39,7 +40,7 @@ export class ConfigDialogComponent implements OnInit {
       comment: [''],
       free_kb: [false],
       free_percent: [false],
-      name: [''],
+      name: ['/dev/sda'],
       total: [false],
       used_kb: [false],
       used_percent: [false]
@@ -136,7 +137,7 @@ export class ConfigDialogComponent implements OnInit {
     }
     if (this.data.node.type === 2) {
       this.cpu = {
-        type: this.data.node.type, 
+        type: this.data.node.type,
         id: this.idNode,
         comment: this.cpuForm.controls.comment.value,
         core: this.cpuForm.controls.core.value,
@@ -281,6 +282,12 @@ export class ConfigDialogComponent implements OnInit {
           }
         }
     });
+  }
+  openSnackHd() {
+    this.snackbar.open('If you have more than one partition to be monitored, the partition number should also be informed. Ex: sda5', 'OK');
+  }
+  openSnackFilter() {
+    this.snackbar.open('The more filters you add, the more accurate the process filtering will be', 'OK');
   }
 
 }

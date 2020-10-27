@@ -386,18 +386,39 @@
                     <mat-label>Name</mat-label>
                     <input matInput formControlName="name">
                 </mat-form-field>
-                <mat-form-field class="example-full-width">
-                    <mat-label>Filter</mat-label>
-                    <input matInput formControlName="filter1">
-                </mat-form-field>
-                <mat-form-field class="example-full-width">
-                    <mat-label>Filter 2</mat-label>
-                    <input matInput formControlName="filter2">
-                </mat-form-field>
-                <mat-form-field class="example-full-width">
-                    <mat-label>Filter 3</mat-label>
-                    <input matInput formControlName="filter3">
-                </mat-form-field>
+                <div fxLayout="row">
+                    <mat-form-field class="example-full-width" fxFlex=90>
+                        <mat-label>Filter</mat-label>
+                        <input matInput formControlName="filter1">
+                    </mat-form-field>
+                    <div fxLayoutAlign="center center">
+                        <button mat-icon-button (click)="openSnackFilter()">
+                            <mat-icon>info</mat-icon>
+                        </button>
+                    </div>
+                </div>
+                <div fxLayout="row">
+                    <mat-form-field class="example-full-width"  fxFlex=90>
+                        <mat-label>Filter 2</mat-label>
+                        <input matInput formControlName="filter2">
+                    </mat-form-field>
+                    <div fxLayoutAlign="center center">
+                        <button mat-icon-button (click)="openSnackFilter()">
+                            <mat-icon>info</mat-icon>
+                        </button>
+                    </div>
+                </div>
+                <div fxLayout="row">
+                    <mat-form-field class="example-full-width"  fxFlex=90>
+                        <mat-label>Filter 3</mat-label>
+                        <input matInput formControlName="filter3">
+                    </mat-form-field>
+                    <div fxLayoutAlign="center center">
+                        <button mat-icon-button (click)="openSnackFilter()">
+                            <mat-icon>info</mat-icon>
+                        </button>
+                    </div>
+                </div>
                 <div fxLayoutGap="14px" fxFlex>
                     <div fxFlex="50">
                         <label>Process CPU</label>
@@ -452,10 +473,17 @@
     <div *ngIf="data.node.type === 5">
         <div>
             <form [formGroup]="hdForm" autocomplete="off" fxLayout="column" fxLayoutGap="12px">
-                <mat-form-field class="example-full-width">
-                    <mat-label>Name</mat-label>
-                    <input matInput formControlName="name">
-                </mat-form-field>
+                <div fxLayout="row">
+                    <mat-form-field class="example-full-width" fxFlex=90>
+                        <mat-label>Name</mat-label>
+                        <input matInput formControlName="name">
+                    </mat-form-field>
+                    <div fxLayoutAlign="center center">
+                        <button mat-icon-button (click)="openSnackHd()">
+                            <mat-icon>info</mat-icon>
+                        </button>
+                    </div>
+                </div>
                 <div fxLayoutGap="14px" fxFlex>
                     <div fxFlex="40">
                         <label>Blocks: </label>

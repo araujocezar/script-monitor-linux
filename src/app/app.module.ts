@@ -10,6 +10,7 @@ import { MatSliderModule, MatIconModule, MatToolbarModule, MatCardModule,
   MatDialogModule, MatButtonModule, MatButtonToggleModule, MatListModule,
    MatMenuModule, MatSidenavModule, MatTableModule, MatTabsModule, MatInputModule,
     MatRadioModule, MatSelectModule } from '@angular/material';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ConfigDialogComponent } from './components/config-dialog/config-dialog.component';
 import { ImportTemplateDialogComponent } from './components/import-template-dialog/import-template-dialog.component';
@@ -51,7 +52,8 @@ import { InfoDialogComponent } from './components/info-dialog/info-dialog.compon
     ReactiveFormsModule,
     MatRadioModule,
     MatSelectModule,
-    CKEditorModule
+    CKEditorModule,
+    MatSnackBarModule
 
   ],
   providers: [],

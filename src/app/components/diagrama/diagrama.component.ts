@@ -1,5 +1,5 @@
 import { Cabecalho } from './../../interfaces/cabecalho.interface';
-import { CPU, DISK, NETWORK, COMPUTER } from './../../interfaces/scripts-local.interface';
+import { CPU, DISK, NETWORK, COMPUTER, PROCESS } from './../../interfaces/scripts-local.interface';
 import { RunDialogComponent } from './../run-dialog/run-dialog.component';
 import { ExportTemplateDialogComponent } from './../export-template-dialog/export-template-dialog.component';
 import { ImportTemplateDialogComponent } from './../import-template-dialog/import-template-dialog.component';
@@ -183,6 +183,7 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
               this.objetosDiagrama.splice(index, 1);
             }
           });
+          console.log(result);
           this.objetosDiagrama.push(result);
         }
       });
@@ -578,7 +579,29 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
         });
       }
       if (objeto.type === 4) {
-
+        Object.keys(objeto).forEach(key => {
+          if (key === 'type' && objeto[key] === 4) {
+            script = script += '<br>';
+            script = script += 'pid = ';
+            script = script + cabecalhoRemoto + ' ';
+            script = script + ' ' + PROCESS.pid + 'grep ' + objeto.filter1 + ' ' +
+              (objeto.filter2 ? '| grep ' + objeto.filter2 + ' ' : '') + (objeto.filter3 ? '| grep ' + objeto.filter3 + ' ' : '') +
+              PROCESS.pid_2 + '<br>';
+            script = script + PROCESS.process;
+          }
+          if (key === 'mem' && objeto[key] === true) {
+            script = script + ' ' + PROCESS.mem + '<br>';
+          }
+          if (key === 'cpu' && objeto[key] === true) {
+            script = script + ' ' + PROCESS.cpu + '<br>';
+          }
+          if (key === 'virtmem' && objeto[key] === true) {
+            script = script + ' ' + PROCESS.virtmem + '<br>';
+          }
+          if (key === 'resmem' && objeto[key] === true) {
+            script = script + ' ' + PROCESS.resmem + '<br>';
+          }
+        });
       }
       if (objeto.type === 5) {
         Object.keys(objeto).forEach(key => {
@@ -713,6 +736,20 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
           });
         }
         if (objeto.type === 4) {
+          Object.keys(objeto).forEach(key => {
+            if (key === 'mem' && objeto[key] === true) {
+              script = script + 'cpuProcess' + ' ';
+            }
+            if (key === 'cpu' && objeto[key] === true) {
+              script = script + 'memProcess' + ' ';
+            }
+            if (key === 'virtmem' && objeto[key] === true) {
+              script = script + 'virtmem' + ' ';
+            }
+            if (key === 'resmem' && objeto[key] === true) {
+              script = script + 'resmem' + ' ';
+            }
+          });
 
         }
         if (objeto.type === 5) {
@@ -841,7 +878,20 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
         });
       }
       if (objeto.type === 4) {
-
+        Object.keys(objeto).forEach(key => {
+          if (key === 'mem' && objeto[key] === true) {
+            script = script + '$cpuProcess' + ' ';
+          }
+          if (key === 'cpu' && objeto[key] === true) {
+            script = script + '$memProcess' + ' ';
+          }
+          if (key === 'virtmem' && objeto[key] === true) {
+            script = script + '$virtmem' + ' ';
+          }
+          if (key === 'resmem' && objeto[key] === true) {
+            script = script + '$resmem' + ' ';
+          }
+        });
       }
       if (objeto.type === 5) {
         Object.keys(objeto).forEach(key => {

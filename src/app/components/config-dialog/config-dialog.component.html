@@ -388,14 +388,22 @@
                 </mat-form-field>
                 <mat-form-field class="example-full-width">
                     <mat-label>Filter</mat-label>
-                    <input matInput formControlName="filter">
+                    <input matInput formControlName="filter1">
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Filter 2</mat-label>
+                    <input matInput formControlName="filter2">
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Filter 3</mat-label>
+                    <input matInput formControlName="filter3">
                 </mat-form-field>
                 <div fxLayoutGap="14px" fxFlex>
                     <div fxFlex="50">
-                        <label>CPU Core</label>
+                        <label>Process CPU</label>
                     </div>
                     <div fxFlex>
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="cpu_core">
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="cpu">
                             <mat-radio-button [value]="true">True</mat-radio-button>
                             <mat-radio-button [value]="false">False</mat-radio-button>
                         </mat-radio-group>
@@ -403,10 +411,10 @@
                 </div>
                 <div fxLayoutGap="14px" fxFlex>
                     <div fxFlex="50">
-                        <label>CPU Total Percent </label>
+                        <label>Process Memory</label>
                     </div>
                     <div fxFlex>
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="cpu_total_percente">
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="mem">
                             <mat-radio-button [value]="true">True</mat-radio-button>
                             <mat-radio-button [value]="false">False</mat-radio-button>
                         </mat-radio-group>
@@ -414,10 +422,10 @@
                 </div>
                 <div fxLayoutGap="14px" fxFlex>
                     <div fxFlex="50">
-                        <label>Elapsed Time</label>
+                        <label>Virtual Memory</label>
                     </div>
                     <div fxFlex>
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="elapsed_time">
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="virtmem">
                             <mat-radio-button [value]="true">True</mat-radio-button>
                             <mat-radio-button [value]="false">False</mat-radio-button>
                         </mat-radio-group>
@@ -425,87 +433,10 @@
                 </div>
                 <div fxLayoutGap="14px" fxFlex>
                     <div fxFlex="50">
-                        <label>Guest Percent:</label>
+                        <label>Resident Memory</label>
                     </div>
                     <div fxFlex>
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="guest_percent">
-                            <mat-radio-button [value]="true">True</mat-radio-button>
-                            <mat-radio-button [value]="false">False</mat-radio-button>
-                        </mat-radio-group>
-                    </div>
-                </div>
-                <div fxLayoutGap="14px" fxFlex>
-                    <div fxFlex="50">
-                        <label>Max Faults Sec </label>
-                    </div>
-                    <div fxFlex>
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="max_faults_sec">
-                            <mat-radio-button [value]="true">True</mat-radio-button>
-                            <mat-radio-button [value]="false">False</mat-radio-button>
-                        </mat-radio-group>
-                    </div>
-                </div>
-                <div fxLayoutGap="14px" fxFlex>
-                    <div fxFlex="50">
-                        <label>Min Faults Sec: </label>
-                    </div>
-                    <div fxFlex>
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="min_faults_sec">
-                            <mat-radio-button [value]="true">True</mat-radio-button>
-                            <mat-radio-button [value]="false">False</mat-radio-button>
-                        </mat-radio-group>
-                    </div>
-                </div>
-                <div fxLayoutGap="14px" fxFlex>
-                    <div fxFlex="50">
-                        <label>Physical Memory Percent: </label>
-                    </div>
-                    <div fxFlex>
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="physical_memory_percent">
-                            <mat-radio-button [value]="true">True</mat-radio-button>
-                            <mat-radio-button [value]="false">False</mat-radio-button>
-                        </mat-radio-group>
-                    </div>
-                </div>
-                <div fxLayoutGap="14px" fxFlex>
-                    <div fxFlex="50">
-                        <label>Resident Memory KB </label>
-                    </div>
-                    <div fxFlex>
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="resident_memory_kb">
-                            <mat-radio-button [value]="true">True</mat-radio-button>
-                            <mat-radio-button [value]="false">False</mat-radio-button>
-                        </mat-radio-group>
-                    </div>
-                </div>
-                <div fxLayoutGap="14px" fxFlex>
-                    <div fxFlex="50">
-                        <label>System Percent:</label>
-                    </div>
-                    <div fxFlex>
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="system_percent">
-                            <mat-radio-button [value]="true">True</mat-radio-button>
-                            <mat-radio-button [value]="false">False</mat-radio-button>
-                        </mat-radio-group>
-                    </div>
-                </div>
-                <div fxLayoutGap="14px" fxFlex>
-                    <div fxFlex="50">
-                        <label>Usr Percent </label>
-                    </div>
-                    <div fxFlex>
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="usr_percent">
-                            <mat-radio-button [value]="true">True</mat-radio-button>
-                            <mat-radio-button [value]="false">False</mat-radio-button>
-                        </mat-radio-group>
-                    </div>
-                </div>
-                <div fxLayoutGap="14px" fxFlex>
-                    <div fxFlex="50">
-                        <label>Virtual Memory KB: </label>
-                    </div>
-                    <div fxFlex>
-                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="virtual_memory_kb">
+                        <mat-radio-group aria-label="Select an option" fxLayoutGap="16px" formControlName="resmem">
                             <mat-radio-button [value]="true">True</mat-radio-button>
                             <mat-radio-button [value]="false">False</mat-radio-button>
                         </mat-radio-group>

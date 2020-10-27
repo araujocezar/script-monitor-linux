@@ -86,3 +86,14 @@ export const NETWORK = {
     wifiuppacket2: `wifiuppacket2 = echo $wifi2 | awk '{print $10}'`,
     wifiuppacket: `wifiuppacket = expr '(' $wifiuppacket2 - $wifiuppacket1 ')'`
 };
+
+export const PROCESS = {
+    pid: `ps aux | `,
+    pid_2: ` | awk '{print $2}'`,
+    process:  `process = pidstat -u -h -p $pid -T ALL -r 60 1 | sed -n '4p'`,
+    cpu: `cpuProcess = echo $process | awk '{print $6}' `,
+    mem: `memProcess = echo $process | awk '{print $12}' `,
+    virtmem: `virtmem =  echo $process | awk '{print $10}' `,
+    resmem: `resmem = echo $process | awk '{print $11}' `
+
+};

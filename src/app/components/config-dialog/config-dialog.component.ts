@@ -91,19 +91,14 @@ export class ConfigDialogComponent implements OnInit {
     });
     this.processForm = this.fb.group({
       comment: [''],
-      cpu_core: [false],
-      cpu_total_percente: [false],
-      elapsed_time: [false],
-      filter: [''],
-      guest_percent: [false],
-      max_faults_sec: [false],
-      min_faults_sec: [false],
+      filter1: [''],
+      filter2: [''],
+      filter3: [''],
       name: [''],
-      physical_memory_percent: [false],
-      resident_memory_kb: [false],
-      system_percent: [false],
-      usr_percent: [false],
-      virtual_memory_kb: [false],
+      cpu: [false],
+      mem: [false],
+      virtmem: [false],
+      resmem: [false],
     });
    }
 
@@ -177,19 +172,14 @@ export class ConfigDialogComponent implements OnInit {
         type: this.data.node.type,
         id: this.idNode,
         comment: this.processForm.controls.comment.value,
-        cpu_core: this.processForm.controls.cpu_core.value,
-        cpu_total_percente: this.processForm.controls.cpu_total_percente.value,
-        elapsed_time: this.processForm.controls.elapsed_time.value,
-        filter: this.processForm.controls.filter.value,
-        guest_percent: this.processForm.controls.guest_percent.value,
-        max_faults_sec: this.processForm.controls.max_faults_sec.value,
-        min_faults_sec: this.processForm.controls.min_faults_sec.value,
+        filter1: this.processForm.controls.filter1.value,
+        filter2: this.processForm.controls.filter2.value,
+        filter3: this.processForm.controls.filter3.value,
         name: this.processForm.controls.name.value,
-        physical_memory_percent: this.processForm.controls.physical_memory_percent.value,
-        resident_memory_kb: this.processForm.controls.resident_memory_kb.value,
-        system_percent: this.processForm.controls.system_percent.value,
-        usr_percent: this.processForm.controls.usr_percent.value,
-        virtual_memory_kb: this.processForm.controls.virtual_memory_kb.value,
+        cpu: this.processForm.controls.cpu.value,
+        mem: this.processForm.controls.mem.value,
+        virtmem: this.processForm.controls.virtmem.value,
+        resmem: this.processForm.controls.resmem.value
       };
       this.dialogRef.close(this.process);
     }
@@ -267,19 +257,14 @@ export class ConfigDialogComponent implements OnInit {
           if (this.data.node.type === 4) {
             this.processForm.patchValue({
               comment: value.comment,
-              cpu_core: value.cpu_core,
-              cpu_total_percente: value.cpu_total_percente,
-              elapsed_time: value.elapsed_time,
-              filter: value.filter,
-              guest_percent: value.guest_percent,
-              max_faults_sec: value.max_faults_sec,
-              min_faults_sec: value.min_faults_sec,
+              filter1: value.filter1,
+              filter2: value.filter2,
+              filter3: value.filter3,
               name: value.name,
-              physical_memory_percent: value.physical_memory_percent,
-              resident_memory_kb: value.resident_memory_kb,
-              system_percent: value.system_percent,
-              usr_percent: value.usr_percent,
-              virtual_memory_kb: value.virtual_memory_kb,
+              cpu: value.cpu,
+              mem: value.mem,
+              virtmem: value.virtmem,
+              resmem: value.resmem,
             });
           }
           if (this.data.node.type === 5) {

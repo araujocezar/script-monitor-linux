@@ -107,15 +107,6 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
     // the Palette's node template is different from the main Diagram's
     myPalette.nodeTemplate =
       $(go.Node, 'Vertical',
-        { locationSpot: go.Spot.Center},
-        $(go.TextBlock,
-          {
-            margin: new go.Margin(3, 0, 0, 0),
-            maxSize: new go.Size(100, 30),
-            isMultiline: false,
-            font: 'bold 10pt sans-serif'
-          },
-          new go.Binding('text', 'head')),
         $(go.Picture,
           { maxSize: new go.Size(50, 50) },
           new go.Binding('source', 'img')),
@@ -125,12 +116,21 @@ export class DiagramaComponent implements OnInit, AfterViewInit {
             maxSize: new go.Size(100, 30),
             isMultiline: false
           },
-          new go.Binding('text', 'text'))
+          new go.Binding('text', 'text')),
+        { locationSpot: go.Spot.Center },
+        $(go.TextBlock,
+          {
+            margin: new go.Margin(3, 0, 0, 0),
+            maxSize: new go.Size(100, 30),
+            isMultiline: false,
+            font: 'bold 10pt sans-serif'
+          },
+          new go.Binding('text', 'head')),
       );
 
     // the list of data to show in the Palette
     myPalette.model.nodeDataArray = [
-      { head: 'Computer', key: '1', img: '../../assets/computer.png', type: 1 , from: true, to: true},
+      { head: 'Computer', key: '1', img: '../../assets/torre-da-cpu.png', type: 1 , from: true, to: true},
       { head: 'CPU', key: '2', img: '../../assets/cpu.png', type: 2 , to: true},
       { head: 'Network', key: '3', img: '../../assets/rede.png', type: 3, to: true },
       { head: 'Process', key: '4', img: '../../assets/processo.png', type: 4, to: true },
